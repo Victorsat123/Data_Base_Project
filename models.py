@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, String, Date, Text, ForeignKey, CheckCon
 from sqlalchemy.orm import DeclarativeBase, relationship
 from sqlalchemy.sql import func
 
-# Базовий клас
 class Base(DeclarativeBase):
     pass
 
@@ -24,9 +23,6 @@ class User(Base):
     user_id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(50), unique=True, nullable=False)
     total_xp = Column(Integer, default=0)
-    
-    # На діаграмі є level_id (FK), але немає самої таблиці Level. 
-    # Поки залишаємо просто як числове поле.
     level_id = Column(Integer) 
     
     __table_args__ = (
@@ -91,15 +87,10 @@ class ProgressLog(Base):
     task = relationship("Task", back_populates="progress_log")
 
 
-# ==========================================
 # ЗАПУСК СТВОРЕННЯ БАЗИ
-# ==========================================
 if __name__ == "__main__":
-    # ЗАМІНІТЬ 'your_password' НА ВАШ РЕАЛЬНИЙ ПАРОЛЬ ВІД MYSQL
     DATABASE_URL = "mysql+pymysql://root:victor123321@localhost:3306/progress_hub"
     
     engine = create_engine(DATABASE_URL, echo=True)
-    
-    # Ця команда бере всі класи вище і створює для них таблиці в MySQL
     Base.metadata.create_all(bind=engine)
     print("Таблиці успішно створені!")

@@ -9,7 +9,6 @@ def add_test_data():
         print("Починаємо запис даних...")
 
         # 2. Створюємо об'єкти (користувача та категорію)
-        # У тебе в моделях ці поля обов'язкові
         new_user = User(username="Wiktor_Student", total_xp=50)
         new_cat = Category(name="Python ORM", color_hex="#3776AB")
 
@@ -17,13 +16,13 @@ def add_test_data():
         db.add(new_user)
         db.add(new_cat)
 
-        # 4. ФІНАЛЬНИЙ КРОК: Зберігаємо в базу (COMMIT)
+        # 4. Зберігаємо в базу (COMMIT)
         db.commit()
         print("Дані успішно збережені в MySQL!")
 
     except Exception as e:
         print(f"Помилка: {e}")
-        db.rollback() # Відкочуємо зміни, якщо щось пішло не так
+        db.rollback() 
     finally:
         db.close() # Закриваємо сесію
 
